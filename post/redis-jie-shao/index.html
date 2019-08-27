@@ -1,0 +1,250 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Redis介绍 | Gridea</title>
+<meta name="description" content="温故而知新" />
+<link rel="shortcut icon" href="https://artcodelcy.github.io//favicon.ico?v=1566921859610">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://artcodelcy.github.io//styles/main.css">
+
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://artcodelcy.github.io/">
+  <img class="avatar" src="https://artcodelcy.github.io//images/avatar.png?v=1566921859610" alt="">
+  </a>
+  <h1 class="site-title">
+    Gridea
+  </h1>
+  <p class="site-description">
+    温故而知新
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              Redis介绍
+            </h2>
+            <div class="post-info">
+              <span>
+                2019-08-28
+              </span>
+              <span>
+                1 min read
+              </span>
+              
+                <a href="https://artcodelcy.github.io//tag/XnNCUn2LX" class="post-tag">
+                  # Redis
+                </a>
+              
+                <a href="https://artcodelcy.github.io//tag/x_bZyI1lgp" class="post-tag">
+                  # 分布式缓存
+                </a>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <h3 id="概念">概念</h3>
+<ul>
+<li>
+<p>什么是Redis<br>
+Redis是由意大利人Salvatore Sanfilippo（网名：antirez）开发的一款内存高速缓存数据库。Redis全称为：Remote Dictionary Server（远程数据服务），该软件使用C语言编写，Redis是一个key-value存储系统，它支持丰富的数据类型，如：string、list、set、zset(sorted set)、hash。<br>
+Redis采用的是基于内存的采用的是单进程单线程模型的KV数据库，由C语言编写。官方提供的数据是可以达到100000+的qps</p>
+</li>
+<li>
+<p>Redis单线程好处：<br>
+不用去考虑各种锁的问题，不存在加锁释放锁操作，没有因为可能出现死锁而导致的性能消耗<br>
+不存在多进程或者多线程导致的切换而消耗CPU<br>
+所以redis线程是安全的</p>
+</li>
+<li>
+<p>Redis单进程单线程弊端：<br>
+无法发挥多核CPU性能，不过可以通过在单机开多个Redis实例来完善；</p>
+</li>
+</ul>
+<h3 id="高级特性">高级特性</h3>
+<ol>
+<li>持久化机制</li>
+<li>哨兵机制高可用</li>
+<li>多种集群方案</li>
+</ol>
+<p>Redis应用场景</p>
+<ol>
+<li>
+<p>【令牌(Token)生成】</p>
+</li>
+<li>
+<p>【短信验证码】</p>
+</li>
+<li>
+<p>【发布订阅】，相当于消息系统，ActiveMQ，RocketMQ等工具类似，但是个人觉得简单用一下还行，如果对于数据一致性要求高的话还是用RocketMQ等专业系统。由于redis把数据添加到队列是返回添加元素在队列的第几位，所以可以做判断用户是第几个访问这种业务<br>
+队列不仅可以把并发请求变成串行，并且还可以做队列或者栈使用</p>
+</li>
+<li>
+<p>【分布式锁】</p>
+</li>
+<li>
+<p>【验证前端的重复请求】（可以自由扩展类似情况），可以通过redis进行过滤：每次请求将request Ip、参数、接口等hash作为key存储redis（幂等性请求），设置多长时间有效期，然后下次请求过来的时候先在redis中检索有没有这个key，进而验证是不是一定时间内过来的重复提交</p>
+</li>
+<li>
+<p>【秒杀系统】，基于redis是单线程特征，防止出现数据库“爆破”</p>
+</li>
+<li>
+<p>【全局增量ID生成】，类似“秒杀”</p>
+</li>
+<li>
+<p>【计数器】<br>
+诸如统计点击数等应用。由于单线程，可以避免并发问题，保证不会出错，而且100%毫秒级性能！</p>
+</li>
+<li>
+<p>【缓存(热点数据)】<br>
+热点数据（经常会被查询，但是不经常被修改或者删除的数据），首选是使用redis缓存，毕竟强大到冒泡的QPS和极强的稳定性不是所有类似工具都有的，而且相比于memcached还提供了丰富的数据类型可以使用，另外，内存中的数据也提供了AOF和RDB等持久化机制可以选择，要冷、热的还是忽冷忽热的都可选。</p>
+</li>
+</ol>
+<p>结合具体应用需要注意一下：很多人用spring的AOP来构建redis缓存的自动生产和清除，过程可能如下：</p>
+<ul>
+<li>
+<p>Select 数据库前查询redis，有的话使用redis数据，放弃select 数据库，没有的话，select 数据库，然后将数据插入redis</p>
+</li>
+<li>
+<p>update或者delete数据库钱，查询redis是否存在该数据，存在的话先删除redis中数据，然后再update或者delete数据库中的数据</p>
+</li>
+</ul>
+<p>上面这种操作，如果并发量很小的情况下基本没问题，但是高并发的情况请注意下面场景：</p>
+<p>为了update先删掉了redis中的该数据，这时候另一个线程执行查询，发现redis中没有，瞬间执行了查询SQL，并且插入到redis中一条数据，回到刚才那个update语句，这个悲催的线程压根不知道刚才那个该死的select线程犯了一个弥天大错！于是这个redis中的错误数据就永远的存在了下去，直到下一个update或者delete。</p>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#%E6%A6%82%E5%BF%B5">概念</a></li>
+<li><a href="#%E9%AB%98%E7%BA%A7%E7%89%B9%E6%80%A7">高级特性</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://artcodelcy.github.io//post/wei-da-shi-ao-chu-lai-de">
+              <h3 class="post-title">
+                伟大是熬出来的
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | 
+  <a class="rss" href="https://artcodelcy.github.io//atom.xml" target="_blank">RSS</a>
+</div>
+
+<script>
+  hljs.initHighlightingOnLoad()
+
+  let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+  // This should probably be throttled.
+  // Especially because it triggers during smooth scrolling.
+  // https://lodash.com/docs/4.17.10#throttle
+  // You could do like...
+  // window.addEventListener("scroll", () => {
+  //    _.throttle(doThatStuff, 100);
+  // });
+  // Only not doing it here to keep this Pen dependency-free.
+
+  window.addEventListener("scroll", event => {
+    let fromTop = window.scrollY;
+
+    mainNavLinks.forEach((link, index) => {
+      let section = document.getElementById(decodeURI(link.hash).substring(1));
+      let nextSection = null
+      if (mainNavLinks[index + 1]) {
+        nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+      }
+      console.log('section.offsetHeight', section.offsetHeight);
+      if (section.offsetTop <= fromTop) {
+        if (nextSection) {
+          if (nextSection.offsetTop > fromTop) {
+            link.classList.add("current");
+          } else {
+            link.classList.remove("current");    
+          }
+        } else {
+          link.classList.add("current");
+        }
+      } else {
+        link.classList.remove("current");
+      }
+    });
+  });
+
+</script>
+
+      </div>
+    </div>
+  </body>
+</html>
