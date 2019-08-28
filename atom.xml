@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://artcodelcy.github.io/</id>
     <title>战</title>
-    <updated>2019-08-28T15:17:36.619Z</updated>
+    <updated>2019-08-28T15:44:58.966Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://artcodelcy.github.io/"/>
     <link rel="self" href="https://artcodelcy.github.io//atom.xml"/>
@@ -10,6 +10,117 @@
     <logo>https://artcodelcy.github.io//images/avatar.png</logo>
     <icon>https://artcodelcy.github.io//favicon.ico</icon>
     <rights>All rights reserved 2019, 战</rights>
+    <entry>
+        <title type="html"><![CDATA[测试]]></title>
+        <id>https://artcodelcy.github.io//post/ce-shi</id>
+        <link href="https://artcodelcy.github.io//post/ce-shi">
+        </link>
+        <updated>2019-08-28T15:43:23.000Z</updated>
+        <content type="html"><![CDATA[<p>Logstash配置同步mysql到es配置<br>
+关于logstash安装:https://www.cnblogs.com/toov5/p/10301727.html</p>
+<p>Logstash是一个开源数据收集引擎，具有实时管道功能。Logstash可以动态地将来自不同数据源的数据统一起来，并将数据标准化到你所选择的目的地</p>
+<p>下面进一步详细说配置:</p>
+<p>1<br>
+2<br>
+3<br>
+4<br>
+5<br>
+6<br>
+7<br>
+8<br>
+9<br>
+10<br>
+11<br>
+jdbc_driver_library: jdbc mysql 驱动的路径，在上一步中已经下载<br>
+jdbc_driver_class: 驱动类的名字，mysql 填 com.mysql.jdbc.Driver 就好了<br>
+jdbc_connection_string: mysql 地址<br>
+jdbc_user: mysql 用户<br>
+jdbc_password: mysql 密码<br>
+schedule: 执行 sql 时机，类似 crontab 的调度<br>
+statement: 要执行的 sql，以 “:” 开头是定义的变量，可以通过 parameters 来设置变量，这里的 sql_last_value 是内置的变量，表示上一次 sql 执行中 update_time 的值，这里 update_time 条件是 &gt;= 因为时间有可能相等，没有等号可能会漏掉一些增量<br>
+use_column_value: 使用递增列的值<br>
+tracking_column_type: 递增字段的类型，numeric 表示数值类型, timestamp 表示时间戳类型<br>
+tracking_column: 递增字段的名称，这里使用 update_time 这一列，这列的类型是 timestamp<br>
+last_run_metadata_path: 同步点文件，这个文件记录了上次的同步点，重启时会读取这个文件，这个文件可以手动修改　　<br>
+注意：</p>
+<p>Crontab：官网 https://tool.lu/crontab/  注意：Crontab表达式以分为单位</p>
+<p>./bin/logstash -f mysql.conf 启动</p>
+<p>原理：<br>
+Logstash --&gt; 发送查询语句到MySQL，</p>
+<p>Logstash -&gt; 发送查询结果到ES</p>
+<p>首次查询全部数据（根据时间1970年），记录最后一此数update_time，作为下一次修改时间查询的条件值。数据库新增或者修改、删除的时候都会记录时间。</p>
+<p>where update_time &gt;= xxxx-xx-xx</p>
+<p>每隔一段时间查询一次。表里面必须有：update_time 字段</p>
+<p>同步方式：</p>
+<ol>
+<li>
+<p>主键的新增方式</p>
+</li>
+<li>
+<p>update_time方式</p>
+</li>
+</ol>
+<p>比较:</p>
+<p>使用 logstash-input-jdbc 插件读取 mysql 的数据，这个插件的工作原理比较简单，就是定时执行一个 sql，然后将 sql 执行的结果写入到流中，增量获取的方式没有通过 binlog 方式同步，而是用一个递增字段作为条件去查询，每次都记录当前查询的位置，由于递增的特性，只需要查询比当前大的记录即可获取这段时间内的全部增量，一般的递增字段有两种，AUTO_INCREMENT 的主键 id 和 ON UPDATE CURRENT_TIMESTAMP 的 update_time 字段，id 字段只适用于那种只有插入没有更新的表，update_time 更加通用一些，建议在 mysql 表设计的时候都增加一个 update_time 字段。</p>
+<p>综上所述配置:</p>
+<p>cd /home/elasticsearch/logstash-6.4.3/config</p>
+<p>复制代码<br>
+input {<br>
+jdbc {<br>
+jdbc_driver_library =&gt; &quot;/home/mysql5.7/mysqlDriver/mysql-connector-java-8.0.13.jar&quot;<br>
+jdbc_driver_class =&gt; &quot;com.mysql.jdbc.Driver&quot;<br>
+# 8.0以上版本：一定要把serverTimezone=UTC天加上<br>
+jdbc_connection_string =&gt; &quot;jdbc:mysql://192.168.124.8:3306/test?characterEncoding=utf8&amp;useSSL=false&amp;serverTimezone=UTC&amp;rewriteBatchedStatements=true&quot;<br>
+jdbc_user =&gt; &quot;root&quot;<br>
+jdbc_password =&gt; &quot;root&quot;<br>
+schedule =&gt; &quot;* * * * *&quot;<br>
+statement =&gt; &quot;SELECT * FROM user WHERE update_time &gt;= :sql_last_value&quot;<br>
+use_column_value =&gt; true<br>
+tracking_column_type =&gt; &quot;timestamp&quot;<br>
+tracking_column =&gt; &quot;update_time&quot;<br>
+last_run_metadata_path =&gt; &quot;syncpoint_table&quot;<br>
+}<br>
+}<br>
+output {<br>
+elasticsearch {<br>
+# ES的IP地址及端口<br>
+hosts =&gt; [&quot;192.168.91.66:9200&quot;]<br>
+# 索引名称 可自定义<br>
+index =&gt; &quot;user&quot;<br>
+# 需要关联的数据库中有有一个id字段，对应类型中的id<br>
+document_id =&gt; &quot;%{id}&quot;<br>
+document_type =&gt; &quot;user&quot;<br>
+}<br>
+stdout {<br>
+# JSON格式输出<br>
+codec =&gt; json_lines<br>
+}<br>
+}<br>
+复制代码</p>
+<p>将配置文件丢到config下: 名字为mysql.conf，随便起的</p>
+<p>启动: ./bin/logstash ./config/mysql.conf</p>
+<p>注意：因为我用的是mysql的最新的驱动8.多的版本，所以配置数据库的url时候一定要把serverTimezone=UTC天加上！</p>
+<p>同时mysql数据库：</p>
+<p>grant all privileges on <em>.</em> to 'root'@'%' identified by 'root' with grant option;</p>
+<p>FLUSH PRIVILEGES;</p>
+<p>很慢的，启动过程盯着日志:</p>
+<p>kinbana:</p>
+<p>如果同步多个多个表:</p>
+<p>配合多个上述的config，然后将其地址配置文件中:</p>
+<p>追加到最后一行，可以配置多个。</p>
+<p>启动方式为:</p>
+<p>./bin/logstash</p>
+<p>其他同步方案比较：<br>
+Logstash： 定时器方式， 实现简单</p>
+<p>MQ： 实时性，复杂性更高，数据一致性好(自带重试，补偿)</p>
+<p>补充:</p>
+<p>ES集群搭建: https://www.cnblogs.com/toov5/p/11361413.html</p>
+<p>kibana连接ES集群：</p>
+<p>docker run -it -d -e ELASTICSEARCH_URL=http://127.0.0.1:9200 --name kibana --network=container:ES01 kibana</p>
+<p>访问:<br>
+http://192.168.91.66:5601</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Redis数据类型]]></title>
         <id>https://artcodelcy.github.io//post/redis-shu-ju-lei-xing</id>
