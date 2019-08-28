@@ -1,22 +1,93 @@
-<?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom">
-    <id>https://artcodelcy.github.io/</id>
-    <title>战</title>
-    <updated>2019-08-28T13:40:59.031Z</updated>
-    <generator>https://github.com/jpmonette/feed</generator>
-    <link rel="alternate" href="https://artcodelcy.github.io/"/>
-    <link rel="self" href="https://artcodelcy.github.io//atom.xml"/>
-    <subtitle>温故而知新</subtitle>
-    <logo>https://artcodelcy.github.io//images/avatar.png</logo>
-    <icon>https://artcodelcy.github.io//favicon.ico</icon>
-    <rights>All rights reserved 2019, 战</rights>
-    <entry>
-        <title type="html"><![CDATA[谈谈缓存]]></title>
-        <id>https://artcodelcy.github.io//post/tan-tan-huan-cun</id>
-        <link href="https://artcodelcy.github.io//post/tan-tan-huan-cun">
-        </link>
-        <updated>2019-08-28T13:40:18.000Z</updated>
-        <content type="html"><![CDATA[<h3 id="聊聊缓存">聊聊缓存：</h3>
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>谈谈缓存 | 战</title>
+<meta name="description" content="温故而知新" />
+<link rel="shortcut icon" href="https://artcodelcy.github.io//favicon.ico?v=1566999635826">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://artcodelcy.github.io//styles/main.css">
+
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://artcodelcy.github.io/">
+  <img class="avatar" src="https://artcodelcy.github.io//images/avatar.png?v=1566999635826" alt="">
+  </a>
+  <h1 class="site-title">
+    战
+  </h1>
+  <p class="site-description">
+    温故而知新
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              谈谈缓存
+            </h2>
+            <div class="post-info">
+              <span>
+                2019-08-28
+              </span>
+              <span>
+                8 min read
+              </span>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <h3 id="聊聊缓存">聊聊缓存：</h3>
 <ul>
 <li>缓存最终的目的是为减轻服务端压力，减少网络传输请求<br>
 比如：<br>
@@ -818,190 +889,108 @@ spring:
 <li>Http缓存：  Http客户端缓存、   NginxHttp缓存设置、Nginx代理缓存</li>
 <li>多级缓存： 缓存数据、   分布式缓存与负载均衡、热点数据与更新缓存、缓存崩溃与快速修复</li>
 </ul>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Redis安装]]></title>
-        <id>https://artcodelcy.github.io//post/redis-an-zhuang</id>
-        <link href="https://artcodelcy.github.io//post/redis-an-zhuang">
-        </link>
-        <updated>2019-08-28T13:38:40.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="前提">前提</h2>
-<p>首先要有wget 和 gcc</p>
-<ul>
-<li>yum -y install wget</li>
-<li>gcc yum install gcc</li>
-</ul>
-<ol>
-<li>下载Redis安装包</li>
-</ol>
-<ul>
-<li>wget http://download.redis.io/releases/redis-3.2.9.tar.gz</li>
-</ul>
-<ol start="2">
-<li>解压Redis安装包</li>
-</ol>
-<ul>
-<li>tar -zxvf redis-3.2.9.tar.gz</li>
-</ul>
-<ol start="3">
-<li>安装</li>
-</ol>
-<ul>
-<li>cd redis-3.2.9</li>
-<li>make</li>
-<li>cd src</li>
-<li>mkdir /usr/local/redis</li>
-<li>make install PREFIX=/usr/local/redis</li>
-</ul>
-<ol start="4">
-<li>移动配置文件到安装目录下</li>
-</ol>
-<ul>
-<li>cd ../</li>
-<li>mkdir /usr/local/redis/etc</li>
-<li>mv redis.conf /usr/local/redis/etc</li>
-</ul>
-<ol start="5">
-<li>配置redis为后台启动</li>
-</ol>
-<ul>
-<li>vi /usr/local/redis/etc/redis.conf           //将daemonize no 改成daemonize yes</li>
-<li>vi /usr/local/redis/etc/redis.conf           // requirepass 123 （注意去掉前面的 “”#”号）</li>
-<li>#bind 127.0.0.1                          开启外网访问</li>
-</ul>
-<ol start="6">
-<li>开启redis</li>
-</ol>
-<ul>
-<li>/usr/local/redis/bin/redis-server</li>
-<li>/usr/local/redis/etc/redis.conf</li>
-</ul>
-<ol start="7">
-<li>连接Redis客户端</li>
-</ol>
-<ul>
-<li>/usr/local/redis/bin/redis-cli -h 127.0.0.1 -p 6379 -a &quot;123&quot;</li>
-</ul>
-<p>PING 结果表示成功：</p>
-<p><img src="https://raw.githubusercontent.com/artcodelcy/imgs/master/imgs-blog20190828172714.png" alt=""></p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Redis介绍]]></title>
-        <id>https://artcodelcy.github.io//post/redis-jie-shao</id>
-        <link href="https://artcodelcy.github.io//post/redis-jie-shao">
-        </link>
-        <updated>2019-08-27T16:01:22.000Z</updated>
-        <content type="html"><![CDATA[<h3 id="概念">概念</h3>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
 <ul>
 <li>
-<p>什么是Redis<br>
-Redis是由意大利人Salvatore Sanfilippo（网名：antirez）开发的一款内存高速缓存数据库。Redis全称为：Remote Dictionary Server（远程数据服务），该软件使用C语言编写，Redis是一个key-value存储系统，它支持丰富的数据类型，如：string、list、set、zset(sorted set)、hash。<br>
-Redis采用的是基于内存的采用的是单进程单线程模型的KV数据库，由C语言编写。官方提供的数据是可以达到100000+的qps</p>
-</li>
-<li>
-<p>Redis单线程好处：<br>
-不用去考虑各种锁的问题，不存在加锁释放锁操作，没有因为可能出现死锁而导致的性能消耗<br>
-不存在多进程或者多线程导致的切换而消耗CPU<br>
-所以redis线程是安全的</p>
-</li>
-<li>
-<p>Redis单进程单线程弊端：<br>
-无法发挥多核CPU性能，不过可以通过在单机开多个Redis实例来完善；</p>
-</li>
-</ul>
-<h3 id="高级特性">高级特性</h3>
-<ol>
-<li>持久化机制</li>
-<li>哨兵机制高可用</li>
-<li>多种集群方案</li>
-</ol>
-<p>Redis应用场景</p>
-<ol>
-<li>
-<p>【令牌(Token)生成】</p>
-</li>
-<li>
-<p>【短信验证码】</p>
-</li>
-<li>
-<p>【发布订阅】，相当于消息系统，ActiveMQ，RocketMQ等工具类似，但是个人觉得简单用一下还行，如果对于数据一致性要求高的话还是用RocketMQ等专业系统。由于redis把数据添加到队列是返回添加元素在队列的第几位，所以可以做判断用户是第几个访问这种业务<br>
-队列不仅可以把并发请求变成串行，并且还可以做队列或者栈使用</p>
-</li>
-<li>
-<p>【分布式锁】</p>
-</li>
-<li>
-<p>【验证前端的重复请求】（可以自由扩展类似情况），可以通过redis进行过滤：每次请求将request Ip、参数、接口等hash作为key存储redis（幂等性请求），设置多长时间有效期，然后下次请求过来的时候先在redis中检索有没有这个key，进而验证是不是一定时间内过来的重复提交</p>
-</li>
-<li>
-<p>【秒杀系统】，基于redis是单线程特征，防止出现数据库“爆破”</p>
-</li>
-<li>
-<p>【全局增量ID生成】，类似“秒杀”</p>
-</li>
-<li>
-<p>【计数器】<br>
-诸如统计点击数等应用。由于单线程，可以避免并发问题，保证不会出错，而且100%毫秒级性能！</p>
-</li>
-<li>
-<p>【缓存(热点数据)】<br>
-热点数据（经常会被查询，但是不经常被修改或者删除的数据），首选是使用redis缓存，毕竟强大到冒泡的QPS和极强的稳定性不是所有类似工具都有的，而且相比于memcached还提供了丰富的数据类型可以使用，另外，内存中的数据也提供了AOF和RDB等持久化机制可以选择，要冷、热的还是忽冷忽热的都可选。</p>
-</li>
-</ol>
-<p>结合具体应用需要注意一下：很多人用spring的AOP来构建redis缓存的自动生产和清除，过程可能如下：</p>
 <ul>
-<li>
-<p>Select 数据库前查询redis，有的话使用redis数据，放弃select 数据库，没有的话，select 数据库，然后将数据插入redis</p>
+<li><a href="#%E8%81%8A%E8%81%8A%E7%BC%93%E5%AD%98">聊聊缓存：</a>
+<ul>
+<li><a href="#%E5%8D%95%E6%9C%BA%E7%BC%93%E5%AD%98%E4%B8%8E%E5%88%86%E5%B8%83%E5%BC%8F%E7%BC%93%E5%AD%98">单机缓存与分布式缓存：</a></li>
+</ul>
 </li>
-<li>
-<p>update或者delete数据库钱，查询redis是否存在该数据，存在的话先删除redis中数据，然后再update或者delete数据库中的数据</p>
+<li><a href="#%E5%8D%95%E6%9C%BA%E7%89%88%E7%BC%93%E5%AD%98%E6%A1%86%E6%9E%B6">单机版缓存框架</a></li>
+</ul>
+</li>
+<li><a href="#ehcache%E4%BD%BF%E7%94%A8%E4%BB%8B%E7%BB%8D">Ehcache使用介绍</a></li>
+</ul>
+</li>
+<li><a href="#%E5%88%86%E5%B8%83%E5%BC%8F%E7%BC%93%E5%AD%98">分布式缓存</a>
+<ul>
+<li><a href="#ehcacheredis%E5%AE%9E%E7%8E%B0%E5%88%86%E5%B8%83%E5%BC%8F%E7%BC%93%E5%AD%98">EhCache+Redis实现分布式缓存</a><br>
+*
+<ul>
+<li><a href="#ehcache%E9%9B%86%E7%BE%A4%E6%A8%A1%E5%BC%8F%E4%BB%8B%E7%BB%8D">Ehcache集群模式介绍</a></li>
+<li><a href="#ehcache%E5%B8%B8%E7%94%A8%E9%9B%86%E7%BE%A4%E6%A8%A1%E5%BC%8F">EhCache常用集群模式</a></li>
+<li><a href="#ehcache%E7%9A%84%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF">Ehcache的使用场景</a></li>
+<li><a href="#redis%E5%92%8Cehcache%E7%BC%93%E5%AD%98%E7%9A%84%E5%8C%BA%E5%88%AB">Redis和Ehcache缓存的区别</a></li>
+</ul>
+</li>
+<li><a href="#ehcache%E5%AE%9E%E9%99%85%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF%E6%80%BB%E7%BB%93">EhCache实际使用场景总结:</a></li>
+<li><a href="#spring-boot20redisehcache%E5%AE%9E%E7%8E%B0%E4%BA%8C%E7%BA%A7%E7%BC%93%E5%AD%98">Spring Boot2.0+Redis+Ehcache实现二级缓存</a></li>
+</ul>
 </li>
 </ul>
-<p>上面这种操作，如果并发量很小的情况下基本没问题，但是高并发的情况请注意下面场景：</p>
-<p>为了update先删掉了redis中的该数据，这时候另一个线程执行查询，发现redis中没有，瞬间执行了查询SQL，并且插入到redis中一条数据，回到刚才那个update语句，这个悲催的线程压根不知道刚才那个该死的select线程犯了一个弥天大错！于是这个redis中的错误数据就永远的存在了下去，直到下一个update或者delete。</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[伟大是熬出来的]]></title>
-        <id>https://artcodelcy.github.io//post/wei-da-shi-ao-chu-lai-de</id>
-        <link href="https://artcodelcy.github.io//post/wei-da-shi-ao-chu-lai-de">
-        </link>
-        <updated>2019-08-26T16:08:44.000Z</updated>
-        <content type="html"><![CDATA[<p>继续熬着，熬着....</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Hello Gridea]]></title>
-        <id>https://artcodelcy.github.io//post/hello-gridea</id>
-        <link href="https://artcodelcy.github.io//post/hello-gridea">
-        </link>
-        <updated>2018-12-11T16:00:00.000Z</updated>
-        <summary type="html"><![CDATA[<p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
-✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
-✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
-<!-- more -->
-<p><a href="https://github.com/getgridea/gridea">Github</a><br>
-<a href="http://hvenotes.fehey.com/">Gridea 主页</a><br>
-<a href="http://fehey.com/">示例网站</a></p>
-<h2 id="特性">特性👇</h2>
-<p>📝  你可以使用最酷的 <strong>Markdown</strong> 语法，进行快速创作</p>
-<p>🌉  你可以给文章配上精美的封面图和在文章任意位置插入图片</p>
-<p>🏷️  你可以对文章进行标签分组</p>
-<p>📋  你可以自定义菜单，甚至可以创建外部链接菜单</p>
-<p>💻  你可以在 <strong>𝖶𝗂𝗇𝖽𝗈𝗐𝗌</strong> 或 <strong>𝖬𝖺𝖼𝖮𝖲</strong> 设备上使用此客户端</p>
-<p>🌎  你可以使用 <strong>𝖦𝗂𝗍𝗁𝗎𝖻 𝖯𝖺𝗀𝖾𝗌</strong> 或 <strong>Coding Pages</strong> 向世界展示，未来将支持更多平台</p>
-<p>💬  你可以进行简单的配置，接入 <a href="https://github.com/gitalk/gitalk">Gitalk</a> 或 <a href="https://github.com/SukkaW/DisqusJS">DisqusJS</a> 评论系统</p>
-<p>🇬🇧  你可以使用<strong>中文简体</strong>或<strong>英语</strong></p>
-<p>🌁  你可以任意使用应用内默认主题或任意第三方主题，强大的主题自定义能力</p>
-<p>🖥  你可以自定义源文件夹，利用 OneDrive、百度网盘、iCloud、Dropbox 等进行多设备同步</p>
-<p>🌱 当然 <strong>Gridea</strong> 还很年轻，有很多不足，但请相信，它会不停向前🏃</p>
-<p>未来，它一定会成为你离不开的伙伴</p>
-<p>尽情发挥你的才华吧！</p>
-<p>😘 Enjoy~</p>
-]]></content>
-    </entry>
-</feed>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://artcodelcy.github.io//post/redis-an-zhuang">
+              <h3 class="post-title">
+                Redis安装
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | 
+  <a class="rss" href="https://artcodelcy.github.io//atom.xml" target="_blank">RSS</a>
+</div>
+
+<script>
+  hljs.initHighlightingOnLoad()
+
+  let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+  // This should probably be throttled.
+  // Especially because it triggers during smooth scrolling.
+  // https://lodash.com/docs/4.17.10#throttle
+  // You could do like...
+  // window.addEventListener("scroll", () => {
+  //    _.throttle(doThatStuff, 100);
+  // });
+  // Only not doing it here to keep this Pen dependency-free.
+
+  window.addEventListener("scroll", event => {
+    let fromTop = window.scrollY;
+
+    mainNavLinks.forEach((link, index) => {
+      let section = document.getElementById(decodeURI(link.hash).substring(1));
+      let nextSection = null
+      if (mainNavLinks[index + 1]) {
+        nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+      }
+      console.log('section.offsetHeight', section.offsetHeight);
+      if (section.offsetTop <= fromTop) {
+        if (nextSection) {
+          if (nextSection.offsetTop > fromTop) {
+            link.classList.add("current");
+          } else {
+            link.classList.remove("current");    
+          }
+        } else {
+          link.classList.add("current");
+        }
+      } else {
+        link.classList.remove("current");
+      }
+    });
+  });
+
+</script>
+
+      </div>
+    </div>
+  </body>
+</html>
